@@ -1,0 +1,12 @@
+
+/* Search results styles */
+#searchResults .card {
+    width: 100%;
+    max-width: 200px;
+    min-height: 280px; /* Adjust height for better visibility */
+    margin: 5px;
+    color: #034407;
+    font-weight: bolder;
+    background-color: #f7c784;
+    object-fit: cover;
+}

@@ -1,0 +1,38 @@
+<html>
+    <head>
+        <title>IMDB Clone</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="css/styles.css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css" crossorigin="anonymous">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    </head>
+    <body class="bg-black">
+        <nav class="navbar navbar-expand-lg bg-dark">
+            <div class="container">
+                <a class="navbar-brand text-white" href="index.html"><h2>Mini IMDB</h2></a>
+                <div id="searchBarDiv" class="input-group rounded search-bar">
+                    <input type="search" list="suggestionList" id="userInput" class="form-control shadow-none" placeholder="Search by Movie Name" aria-label="Search" aria-describedby="search-addon">
+                    <datalist id="suggestionList"></datalist>
+                    <button id="searchBtn" class="input-group-text border-0 search-button"><i class="fas fa-search"></i></buton>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="index.html">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="views/favourites.html" >Favourites</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <br/>
+        
+        <div id="moviesDiv" class="container mt-5">
+            <div id="searchResults" class="row mt-4"></div>
+        </div>
+    </body>
+    <script src="src/index.js"></script>
+</html>
