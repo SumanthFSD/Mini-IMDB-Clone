@@ -1,18 +1,21 @@
-const apiKey = '6b6ccfce';
+const apiKey = '6b6ccfce'; // OMDB API key
 const searchInput = document.getElementById("userInput");
 const suggestionContainer = document.getElementById("suggestionList");
 const searchButton = document.getElementById("searchBtn");
 
+// Search movies from OMDB and return them
 async function searchMovies(query) {
     const response = await fetch(`http://www.omdbapi.com/?apikey=6b6ccfce&s=${query}`)
     const data = await response.json();
     return data.Search || [];
 }
 
+// Clear all the search suggestions for the entered text
 function clearSuggestions() {
     suggestionContainer.innerHTML = "";
 }
 
+// from OMDB search for movie names that has the entered text
 function getSuggestions(text) {
     const apiUrl = `http://www.omdbapi.com/?apikey=6b6ccfce&s=${text}`;
 
@@ -32,7 +35,7 @@ function getSuggestions(text) {
     })
 }
 
-
+// If there is some text entered in the input area get suggestions for that
 searchInput.addEventListener("input", () => {
     const movieName = searchInput.value.trim();
     if(movieName.length > 0){
@@ -43,6 +46,7 @@ searchInput.addEventListener("input", () => {
     }
 } );
 
+// Show suggestions by creating option element and appending it to the suggestion data list
 function displaySuggestions(movieList) {
     suggestionContainer.innerHTML = "";
 
@@ -59,6 +63,7 @@ function displaySuggestions(movieList) {
     });
 }
 
+// Create a local storage for favourites and add the favourite movies to it
 async function addToFavourites(event) {
     const imdbID = event.target.dataset.imdbid;
     const movie = await getMovieInfo(imdbID);
@@ -79,12 +84,14 @@ async function addToFavourites(event) {
     }
 }
 
+// Get details for the selected movie and return the data
 async function getMovieInfo(imdbID){
     const response = await fetch(`http://www.omdbapi.com/?apikey=6b6ccfce&i=${imdbID}`);
     const data = await response.json();
     return data.Response === 'True' ? data : null;
 }
 
+// Create a card for each movie and load it to the html page
 function displayMovies(movies){
     const moviesContainer = document.getElementById("searchResults");
     moviesContainer.innerHTML = "";
@@ -107,6 +114,7 @@ function displayMovies(movies){
     });
 }
 
+// Display all movie that has the entered text in the movie name when the search button is clicked
 searchButton.addEventListener("click", function () {
     const movieName = searchInput.value.trim();
     // console.log(movieName);
@@ -120,6 +128,7 @@ searchButton.addEventListener("click", function () {
     }
 });
 
+// Populate the web page with the previous search results when the web page is restarted
 const searchHistory = JSON.parse(localStorage.getItem('searchResults'));
 if (searchHistory !== null && Object.keys(searchHistory).length > 0) {
     displayMovies(searchHistory);

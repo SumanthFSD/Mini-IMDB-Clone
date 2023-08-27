@@ -27,7 +27,7 @@ function displayMovieDetails(movie) {
 document.addEventListener('DOMContentLoaded', () => {
     const urlParams = new URLSearchParams(window.location.search);
     const imdbID = urlParams.get('id');
-    console.log(imdbID);
+    // console.log(imdbID);
 
     if (imdbID) {
         getMovieInfo(imdbID)

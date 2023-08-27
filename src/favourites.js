@@ -1,4 +1,4 @@
-
+// Add the selected movie to the favourites list and popukate the HTML page with the movie info
 function displayFavouriteMovies(){
     // console.log("Fav list");
     const favouritesListContainer = document.getElementById('favouritesList');
@@ -32,16 +32,17 @@ function displayFavouriteMovies(){
     });
 }
 
+// Delete the selected movie from the favourites list of the local storage
 function removeFromFavourites(event){
     const imdbID = event.target.dataset.imdbid;
     const favouritesList = JSON.parse(localStorage.getItem('favourites')) || [];
 
     const movieToRemove = favouritesList.find(movie => movie.imdbID === imdbID);
     if(movieToRemove) {
-        alert(`${movieToRemove.Title} will be removed from your favourites!`);
         const updatedFavouritesList = favouritesList.filter(movie => movie.imdbID !== imdbID);
         localStorage.setItem('favourites', JSON.stringify(updatedFavouritesList));
         displayFavouriteMovies();
+        alert(`${movieToRemove.Title} is removed from your favourites!`);
     }
     else{
         alert('Movie not found in favourites');
@@ -52,4 +53,5 @@ if(window.location.pathname === '../views/favourites.html') {
     displayFavouriteMovies();
 }
 
+// show all the favourite movies when the favourites.html page is loaded
 window.onload = displayFavouriteMovies;
