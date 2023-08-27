@@ -1,6 +1,6 @@
 
 function displayFavouriteMovies(){
-    console.log("Fav list");
+    // console.log("Fav list");
     const favouritesListContainer = document.getElementById('favouritesList');
     favouritesListContainer.innerHTML = '';
 
@@ -14,7 +14,7 @@ function displayFavouriteMovies(){
     else{
         favouritesList.forEach(movie => {
             const favMovieCard = document.createElement('div');
-            favMovieCard.classList.add('card');
+            favMovieCard.classList.add('card', 'col-md-4', 'mb-4');
             favMovieCard.innerHTML=`
             <img src="${movie.Poster}" class="card-img-top" alt="${movie.Title}">
             <div class="card-body">
@@ -36,11 +36,11 @@ function removeFromFavourites(event){
     const imdbID = event.target.dataset.imdbid;
     const favouritesList = JSON.parse(localStorage.getItem('favourites')) || [];
 
-    const movieToRemove = favouritesList.find(movie => movie.imdbID !== imdbID);
+    const movieToRemove = favouritesList.find(movie => movie.imdbID === imdbID);
     if(movieToRemove) {
+        alert(`${movieToRemove.Title} will be removed from your favourites!`);
         const updatedFavouritesList = favouritesList.filter(movie => movie.imdbID !== imdbID);
         localStorage.setItem('favourites', JSON.stringify(updatedFavouritesList));
-        alert(`${movieToRemove.Title} has ben removed from your favourites!`);
         displayFavouriteMovies();
     }
     else{
@@ -51,9 +51,5 @@ function removeFromFavourites(event){
 if(window.location.pathname === '../views/favourites.html') {
     displayFavouriteMovies();
 }
-
-// const favouritesLink = document.querySelector('a[href="favourites.html"]');
-// console.log(favouritesLink);
-// favouritesLink.addEventListener('click', displayFavouriteMovies);
 
 window.onload = displayFavouriteMovies;

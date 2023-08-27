@@ -62,7 +62,7 @@ function displaySuggestions(movieList) {
 async function addToFavourites(event) {
     const imdbID = event.target.dataset.imdbid;
     const movie = await getMovieInfo(imdbID);
-    console.log(imdbID, movie);
+    // console.log(imdbID, movie);
     if(movie){
         const favouritesList = JSON.parse(localStorage.getItem('favourites')) || [];
         if(!favouritesList.some(m => m.imdbID === movie.imdbID)){
@@ -97,7 +97,7 @@ function displayMovies(movies){
             <div class="card-body">
                 <h5 class="card-title">${movie.Title}</h5>
                 <button id = "favBtn" class="btn btn-primary btn-sm favourite-button" data-imdbid="${movie.imdbID}">Add to Favourites</button>
-                <a href="movie.html?id=${movie.imdbID}" class="btn btn-secondary btn-sm more-button">More</a>
+                <a href="views/movie.html?id=${movie.imdbID}" class="btn btn-secondary btn-sm more-button">More</a>
             `
             moviesContainer.appendChild(movieCard);
     });
