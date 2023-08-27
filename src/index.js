@@ -9,15 +9,9 @@ async function searchMovies(query) {
     return data.Search || [];
 }
 
-searchInput.addEventListener("input", () => {
-    const movieName = searchInput.value.trim();
-    if(movieName.length > 0){
-        getSuggestions(movieName);
-    }
-    else{
-        clearSuggestions();
-    }
-} );
+function clearSuggestions() {
+    suggestionContainer.innerHTML = "";
+}
 
 function getSuggestions(text) {
     const apiUrl = `http://www.omdbapi.com/?apikey=6b6ccfce&s=${text}`;
@@ -38,6 +32,17 @@ function getSuggestions(text) {
     })
 }
 
+
+searchInput.addEventListener("input", () => {
+    const movieName = searchInput.value.trim();
+    if(movieName.length > 0){
+        getSuggestions(movieName);
+    }
+    else{
+        clearSuggestions();
+    }
+} );
+
 function displaySuggestions(movieList) {
     suggestionContainer.innerHTML = "";
 
@@ -54,8 +59,30 @@ function displaySuggestions(movieList) {
     });
 }
 
-function clearSuggestions() {
-    suggestionContainer.innerHTML = "";
+async function addToFavourites(event) {
+    const imdbID = event.target.dataset.imdbid;
+    const movie = await getMovieInfo(imdbID);
+    console.log(imdbID, movie);
+    if(movie){
+        const favouritesList = JSON.parse(localStorage.getItem('favourites')) || [];
+        if(!favouritesList.some(m => m.imdbID === movie.imdbID)){
+            favouritesList.push(movie);
+            localStorage.setItem('favourites', JSON.stringify(favouritesList));
+            alert(`${movie.Title} has been added to your favourites`);
+        }
+        else{
+            alert(`You already have ${movie.Title} in your favourites list.`);
+        }
+    }
+    else{
+        alert("Sorry, Can't add!");
+    }
+}
+
+async function getMovieInfo(imdbID){
+    const response = await fetch(`http://www.omdbapi.com/?apikey=6b6ccfce&i=${imdbID}`);
+    const data = await response.json();
+    return data.Response === 'True' ? data : null;
 }
 
 function displayMovies(movies){
@@ -69,16 +96,20 @@ function displayMovies(movies){
             <img src="${movie.Poster}" class="card-img-top" alt="${movie.Title}">
             <div class="card-body">
                 <h5 class="card-title">${movie.Title}</h5>
-                <button class="btn btn-primary btn-sm favourite-button" data-imdbid="${movie.imdbID}">Add to Favourites</button>
+                <button id = "favBtn" class="btn btn-primary btn-sm favourite-button" data-imdbid="${movie.imdbID}">Add to Favourites</button>
                 <a href="movie.html?id=${movie.imdbID}" class="btn btn-secondary btn-sm more-button">More</a>
             `
             moviesContainer.appendChild(movieCard);
+    });
+    const addToFavouritesBtn = document.querySelectorAll(".favourite-button");
+    addToFavouritesBtn.forEach(button => {
+        button.addEventListener('click', addToFavourites);
     });
 }
 
 searchButton.addEventListener("click", function () {
     const movieName = searchInput.value.trim();
-    console.log(movieName);
+    // console.log(movieName);
     if(movieName.length > 0){
         searchMovies(movieName)
         .then(results => {
@@ -87,4 +118,9 @@ searchButton.addEventListener("click", function () {
         })
         .catch(err => console.error('Error searching movies:', err));
     }
-})
+});
+
+const searchHistory = JSON.parse(localStorage.getItem('searchResults'));
+if (searchHistory !== null && Object.keys(searchHistory).length > 0) {
+    displayMovies(searchHistory);
+}

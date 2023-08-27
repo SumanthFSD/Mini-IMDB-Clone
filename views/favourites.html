@@ -3,7 +3,7 @@
         <title>IMDB Clone</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="css/styles.css">
+        <link rel="stylesheet" href="../css/styles.css">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css" crossorigin="anonymous">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
     </head>
@@ -16,6 +16,9 @@
                         <li class="nav-item">
                             <a class="nav-link text-white" href="../index.html">Home</a>
                         </li>
+                        <li class="nav-item">
+                            <a id="favBtn" class="nav-link text-white" href="favourites.html" >Favourites</a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -24,10 +27,10 @@
         
         <div id="favMoviesDiv" class="container mt-2">
             <h2 class="text-white">Your favourite movies</h2>
-            <div id="favouritesList" class="row">
+            <div id="favouritesList" class="row mt-4">
                 <!-- The dynamically generated favourites movie list will be displayed here -->
             </div>
         </div>
     </body>
-    <script src="src/index.js"></script>
+    <script src="../src/favourites.js" defer></script>
 </html>
