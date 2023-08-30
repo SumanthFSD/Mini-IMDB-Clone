@@ -5,7 +5,7 @@ const searchButton = document.getElementById("searchBtn");
 
 // Search movies from OMDB and return them
 async function searchMovies(query) {
-    const response = await fetch(`http://www.omdbapi.com/?apikey=6b6ccfce&s=${query}`)
+    const response = await fetch(`https://www.omdbapi.com/?apikey=6b6ccfce&s=${query}`)
     const data = await response.json();
     return data.Search || [];
 }
@@ -17,7 +17,7 @@ function clearSuggestions() {
 
 // from OMDB search for movie names that has the entered text
 function getSuggestions(text) {
-    const apiUrl = `http://www.omdbapi.com/?apikey=6b6ccfce&s=${text}`;
+    const apiUrl = `https://www.omdbapi.com/?apikey=6b6ccfce&s=${text}`;
 
     fetch(apiUrl)
     .then(response => response.json())
@@ -86,7 +86,7 @@ async function addToFavourites(event) {
 
 // Get details for the selected movie and return the data
 async function getMovieInfo(imdbID){
-    const response = await fetch(`http://www.omdbapi.com/?apikey=6b6ccfce&i=${imdbID}`);
+    const response = await fetch(`https://www.omdbapi.com/?apikey=6b6ccfce&i=${imdbID}`);
     const data = await response.json();
     return data.Response === 'True' ? data : null;
 }
